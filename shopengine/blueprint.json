@@ -1,0 +1,24 @@
+{
+  "landingPage": "/wp-admin/edit.php?post_type=shopengine-template#shopengine-templates",
+  "plugins": [
+    "elementor",
+    "woocommerce",
+    "shopengine"
+  ],
+  "siteOptions": {
+    "shopengine_onboard_status": "onboarded",
+    "elementor_onboarded": "1"
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "writeFile",
+      "path": "/wordpress/wp-content/mu-plugins/emailkit-blueprint.php",
+      "data": "<?php add_action('init', function() { update_option('woocommerce_admin_onboarding_dismissed', 'true'); update_option('woocommerce_onboarding_opt_in', 'no'); update_option('woocommerce_setup_complete', 'yes'); update_option('woocommerce_onboarding_profile', array('completed' => true)); }); add_action('admin_init', function() { if (is_user_logged_in() && current_user_can('administrator') && !defined('DOING_AJAX')) { $current_page = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : ''; if (strpos($current_page, 'edit.php?post_type=shopengine-template') === false && strpos($current_page, 'action=elementor') === false) { wp_redirect(admin_url('edit.php?post_type=shopengine-template#shopengine-templates')); exit; } } });"
+    }
+  ]
+}
